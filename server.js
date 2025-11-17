@@ -3,7 +3,6 @@ const { PrismaClient } = require('@prisma/client');
 
 const app = express();
 const prisma = new PrismaClient();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -134,20 +133,15 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// 404 handler (FIXED: No path specified)
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/health`);
-  console.log(`Homepage data: http://localhost:${PORT}/api/website/homepage`);
-  console.log(`Form structure: http://localhost:${PORT}/api/website/homepage/structure`);
-});
+// Export for Vercel serverless (do not use app.listen in serverless environments)
+module.exports = app;
 
-// Graceful shutdown
+// Graceful shutdown (optional in serverless, but good practice)
 process.on('SIGTERM', async () => {
   console.log('SIGTERM received, shutting down gracefully');
   await prisma.$disconnect();
