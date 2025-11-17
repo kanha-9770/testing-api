@@ -7,9 +7,9 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "build": "prisma generate",
+    "postinstall": "npx prisma generate",
     "vercel-build": "echo 'Prisma generated via postinstall'"
   },
-  "postinstall": "npx prisma generate",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "prisma": "^6.19.0",
-    "nodemon": "^3.1.4"  // Add if you use it for dev
+    "nodemon": "^3.1.4"
   },
   "engines": {
     "node": ">=18.0.0"
